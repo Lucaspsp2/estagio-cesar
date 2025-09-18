@@ -1,3 +1,3 @@
 import cowsay
-import s
+import selenium
 cowsay.cow("good morning")
