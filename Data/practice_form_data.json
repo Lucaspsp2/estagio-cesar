@@ -1,0 +1,30 @@
+[
+  {
+    "first_name": "Luke",
+    "last_name": "Jackson",
+    "email": "luke.doe@example.com",
+    "gender": "Male",
+    "mobile": "1234567890",
+    "dob": "15 dez 1990",
+    "subjects": ["Maths", "Physics"],
+    "hobbies": ["Sports", "Music"],
+    "picture": "",
+    "address": "123 Main Street",
+    "state": "NCR",
+    "city": "Delhi"
+  },
+  {
+    "first_name": "Bridges",
+    "last_name": "Jackson",
+    "email": "Bridges.Jackson@example.com",
+    "gender": "Female",
+    "mobile": "0987654321",
+    "dob": "20 Octuber 1995",
+    "subjects": ["Chemistry", "Biology"],
+    "hobbies": ["Reading"],
+    "picture": "",
+    "address": "456 Oak Avenue",
+    "state": "NCR",
+    "city": "Gurgaon"
+  }
+]
