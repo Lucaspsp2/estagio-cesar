@@ -3,7 +3,20 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.keys import Keys
 
 class PracticeFormPage:
+    ''' Page Object para a página 'Student Registration Form' do DemoQA.
+
+    Esta classe implementa o padrão Page Object Model (POM) para
+    abstrair a interação com os elementos da página do formulário
+    de registro de estudantes, contendo todos os localizadores
+    e métodos de interação.'''
     def __init__(self, driver):
+        """
+        Inicializa o Page Object e define os localizadores da página.
+
+        Args:
+            driver: Instância do WebDriver (e.g., Chrome, Firefox) para
+                    interagir com a página.
+        """
         self.driver = driver
         self.url = "https://demoqa.com/automation-practice-form"
         self.first_name_input = (By.ID, "firstName")
@@ -22,9 +35,18 @@ class PracticeFormPage:
         self.out_put_modal = (By.ID, "example-modal-sizes-title-lg")
     
     def navigate(self):
-        self.driver.get(self.url)
+         """Navega o navegador para a URL da página do formulário."""
+         self.driver.get(self.url)
 
     def fill_form(self, data):
+        """
+        Preenche o formulário de registro de estudantes com dados fornecidos.
+
+        Args:
+            data (dict): Dicionário contendo todos os dados a serem inseridos
+                         no formulário. Deve incluir chaves como 'first_name',
+                         'gender', 'subjects', 'state', etc.
+        """
         self.driver.find_element(*self.first_name_input).send_keys(data["first_name"])
         self.driver.find_element(*self.last_name_input).send_keys(data["last_name"])
         self.driver.find_element(*self.email_input).send_keys(data["email"])
@@ -64,9 +86,20 @@ class PracticeFormPage:
 
 
     def submit_form(self):
+        """
+        Submete o formulário, acionando o botão 'Submit'.
+        
+        Realiza um scroll até o botão antes de clicar.
+        """
         button = self.driver.find_element(*self.submit_button)
         self.driver.find_element(*self.submit_button).click()
         self.driver.execute_script("arguments[0].scrollIntoView(true);", button)
 
     def check_modal_visible(self):
+        """
+        Verifica se o modal de confirmação de envio do formulário está visível.
+
+        Returns:
+            bool: True se o modal estiver visível, False caso contrário.
+        """
         return self.driver.find_element(*self.out_put_modal).is_displayed()

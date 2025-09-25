@@ -1,6 +1,7 @@
 import pytest
 import json
 from pages.practice_form_page import PracticeFormPage
+from utils.data_loader import load_json_data
 
 def load_test_data(path):
     with open(path, 'r') as f:
