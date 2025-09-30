@@ -1,5 +1,3 @@
 browser,test_case_name,status,timestamp
-Chrome,test_fill_practice_form[chrome-data0],Failed,9.0428s
-Chrome,test_fill_practice_form[chrome-data1],Passed,8.9770s
-Firefox,test_fill_practice_form[firefox-data0],Failed,8.5955s
-Firefox,test_fill_practice_form[firefox-data1],Failed,8.8748s
+N/a,test_button_tooltip[chrome-chrome],Passed,9.6572s
+N/a,test_button_tooltip[firefox-chrome],Passed,5.3352s

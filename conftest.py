@@ -5,11 +5,13 @@ import time
 from pathlib import Path
 import os, pytest_html
 import csv
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
 report_data = []
 
-# def pytest_addoption(parser):
-"""
+def pytest_addoption(parser):
+    """
     Registra opções de linha de comando personalizadas para o pytest.
 
     Este hook é invocado pelo pytest durante sua inicialização (geralmente
@@ -28,8 +30,31 @@ report_data = []
             "--browser", action="store", default="chrome", help="Navegador a ser usado nos testes (e.g., chrome ou firefox)"
         )
     """
-    # parser.addoption("--browser", action="store", default="chrome", help="browser to execute tests (chrome or firefox)")
-# @pytest.fixture
+    parser.addoption("--browser", action="store", default="chrome", help="browser to execute tests (chrome or firefox)")
+
+def pytest_generate_tests(metafunc):
+    if "browser" in metafunc.fixturenames:
+        browser = metafunc.config.getoption("browser").split(",")
+        metafunc.parametrize("browser", browser)
+
+# @pytest.fixture(params=["chrome", "firefox"], scope="function")
+# def driver(browser):
+#     if browser == "chrome":
+#         options = ChromeOptions()
+#     elif browser == "firefox":
+#         options = FirefoxOptions()
+#     else:
+#         raise ValueError(f"Browser not supported: {browser}")
+
+#     driver = webdriver.Remote(
+#         command_executor="http://localhost:4444/wd/hub",
+#         options=options,
+#     )
+
+#     yield driver
+#     driver.quit()
+@pytest.fixture
+
 @pytest.fixture(params=["chrome", "firefox"], scope="function")
 def driver(request):
     # browser = request.config.getoption("--browser").lower()
@@ -164,3 +189,24 @@ def pytest_collection_modifyitems(config, items):
     for item in items:
         if "slow" in item.keywords and not config.getoption("--runslow"):
             item.add_marker(pytest.mark.skip(reason="need --runslow option to run"))
+
+
+
+@pytest.fixture(scope="class")
+def class_resource():
+    print("\n[SETUP] class_resource")
+    yield "class fixture"
+    print("[TEARDOWN] class_resource")
+
+@pytest.fixture(scope="module")
+def module_resource():
+    print("\n[SETUP] module_resource")
+    yield "module fixture"
+    print("[TEARDOWN] module_resource")
+
+@pytest.fixture(scope="session")
+def session_resource():
+    print("\n[SETUP] session_resource")
+    yield "session fixture"
+    print("[TEARDOWN] session_resource")
+                

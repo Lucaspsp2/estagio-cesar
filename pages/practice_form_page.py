@@ -1,6 +1,8 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 class PracticeFormPage:
     ''' Page Object para a página 'Student Registration Form' do DemoQA.
@@ -33,6 +35,8 @@ class PracticeFormPage:
         self.city_dropdown = (By.ID, "city")
         self.submit_button = (By.ID, "submit")
         self.out_put_modal = (By.ID, "example-modal-sizes-title-lg")
+        self.subjects_input = (By.ID, "subjectsInput")
+        self.subjects_text = (By.ID, "react-select-2-option-0") # novo locator para o click do subject  
     
     def navigate(self):
          """Navega o navegador para a URL da página do formulário."""
@@ -61,9 +65,13 @@ class PracticeFormPage:
 
         # Subjects
         subjects_field = self.driver.find_element(*self.subjects_input)
+        self.driver.execute_script("arguments[0].scrollIntoView(true);", subjects_field)
         for subject in data["subjects"]:
             subjects_field.send_keys(subject)
-            subjects_field.send_keys(Keys.ENTER)
+            subjects_text = self.wait.until(
+                EC.element_to_be_clickable(self.subjects_text)
+           )
+        subjects_text.click()
 
         # Hobbies
         for hobby in data["hobbies"]:
